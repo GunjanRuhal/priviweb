@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PII Discovery</title>
+    <meta name="description" content="Scan files and folders to discover personally identifiable information (PII) belonging to a specific person.">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <header id="page-header" class="app-header">
+        <div class="app-header-top">
+            <span class="brand">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3l7 4v5c0 5-3.5 8.5-7 9-3.5-.5-7-4-7-9V7l7-4z"/>
+                    <path d="M9 12l2 2 4-4"/>
+                </svg>
+                PII Discovery
+            </span>
+        </div>
+        <h1>PII Discovery</h1>
+        <p class="app-description">
+            Upload files or a folder and provide at least one identifier to search for that person's
+            personally identifiable information across the uploaded content.
+        </p>
+    </header>
+
+    <main id="page-main">
+
+        <form id="scan-form" novalidate>
+
+            <!-- 2. Anchor Information -->
+            <section id="anchor-section" aria-labelledby="anchor-section-heading">
+                <span class="section-eyebrow">Step 1</span>
+                <h2 id="anchor-section-heading">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="8" r="3.5"/>
+                        <path d="M5 20c1-3.5 4-5.5 7-5.5s6 2 7 5.5"/>
+                    </svg>
+                    Person Identifiers
+                </h2>
+                <p id="anchor-helper-text" class="helper-text">
+                    Provide at least one identifier below. It is used to anchor the search to a specific
+                    person within the uploaded files.
+                </p>
+
+                <fieldset id="anchor-fieldset" aria-describedby="anchor-helper-text">
+                    <legend>Identifiers (at least one required)</legend>
+
+                    <div class="form-field">
+                        <label for="anchor-name">Name</label>
+                        <input type="text" id="anchor-name" name="name" autocomplete="off">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="anchor-email">Email</label>
+                        <input type="email" id="anchor-email" name="email" autocomplete="off">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="anchor-phone">Phone</label>
+                        <input type="tel" id="anchor-phone" name="phone" autocomplete="off">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="anchor-aadhaar">Aadhaar</label>
+                        <input type="text" id="anchor-aadhaar" name="aadhaar" autocomplete="off">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="anchor-pan">PAN</label>
+                        <input type="text" id="anchor-pan" name="pan" autocomplete="off">
+                    </div>
+                </fieldset>
+            </section>
+
+            <!-- 3. Scan Source -->
+            <section id="scan-source-section" aria-labelledby="scan-source-heading">
+                <span class="section-eyebrow">Step 2</span>
+                <h2 id="scan-source-heading">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M7 3.5h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1z"/>
+                        <path d="M14 3.5V8h4.5"/>
+                    </svg>
+                    Files to Scan
+                </h2>
+                <p id="scan-source-helper-text" class="helper-text">
+                    Upload a single file, multiple files, or an entire folder.
+                </p>
+
+                <div
+                    id="drop-zone"
+                    class="drop-zone"
+                    role="button"
+                    tabindex="0"
+                    aria-describedby="scan-source-helper-text"
+                    aria-label="Drag and drop files or a folder here, or use the buttons below to choose files."
+                >
+                    <svg class="drop-zone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M7 18a4.5 4.5 0 0 1-.5-8.98A5.5 5.5 0 0 1 17.5 8H18a3.5 3.5 0 0 1 0 7"/>
+                        <path d="M12 12v7"/>
+                        <path d="M9.5 15.5 12 13l2.5 2.5"/>
+                    </svg>
+                    <p>Drag and drop files or a folder here</p>
+                    <p class="drop-zone-hint">or use the buttons below</p>
+                </div>
+
+                <div id="upload-controls" class="upload-controls">
+                    <label for="file-input" class="upload-button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M7 3.5h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1z"/>
+                            <path d="M14 3.5V8h4.5"/>
+                        </svg>
+                        Choose File(s)
+                    </label>
+                    <input
+                        type="file"
+                        id="file-input"
+                        name="files"
+                        multiple
+                        class="visually-hidden-input"
+                    >
+
+                    <label for="folder-input" class="upload-button">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3.5 6.5a1 1 0 0 1 1-1H9l2 2h8.5a1 1 0 0 1 1 1v9.5a1 1 0 0 1-1 1h-16a1 1 0 0 1-1-1v-11.5z"/>
+                        </svg>
+                        Choose Folder
+                    </label>
+                    <input
+                        type="file"
+                        id="folder-input"
+                        name="folder"
+                        webkitdirectory
+                        directory
+                        multiple
+                        class="visually-hidden-input"
+                    >
+                </div>
+
+                <div id="selected-files-container">
+                    <h3 id="selected-files-heading">Selected Files</h3>
+                    <ul
+                        id="selected-files-list"
+                        aria-live="polite"
+                        aria-labelledby="selected-files-heading"
+                    >
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 4. Scan Controls -->
+            <section id="scan-controls-section" aria-label="Scan controls">
+                <button type="submit" id="scan-button">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="10.5" cy="10.5" r="6.5"/>
+                        <path d="m20 20-4.3-4.3"/>
+                    </svg>
+                    Scan
+                </button>
+                <button type="reset" id="reset-button">Reset</button>
+            </section>
+
+        </form>
+
+        <!-- 5. Progress Section -->
+        <section id="progress-section" hidden aria-live="polite" aria-labelledby="progress-section-heading">
+            <h2 id="progress-section-heading" class="visually-hidden">Scan Progress</h2>
+            <div id="loading-spinner" class="spinner" role="status" aria-label="Scan in progress"></div>
+            <p id="status-message">Scanning...</p>
+            <div class="progress-bar-track" aria-hidden="true">
+                <div class="progress-bar-fill"></div>
+            </div>
+        </section>
+
+        <!-- 6. Results Section -->
+        <section id="results-section" hidden aria-labelledby="results-section-heading">
+            <h2 id="results-section-heading">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="10.5" cy="10.5" r="6.5"/>
+                    <path d="m20 20-4.3-4.3"/>
+                </svg>
+                Scan Results
+            </h2>
+
+            <div id="scan-success-banner" class="alert alert-success" hidden>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="m8.5 12.5 2.5 2.5 4.5-5"/>
+                </svg>
+                <div>
+                    <h3>No PII Found</h3>
+                    <p>None of the provided identifiers matched personally identifiable information in the uploaded files.</p>
+                </div>
+            </div>
+
+            <div id="scan-summary" class="results-block" aria-labelledby="scan-summary-heading">
+                <h3 id="scan-summary-heading">Scan Summary</h3>
+                <div id="scan-summary-content">
+                </div>
+            </div>
+
+            <div id="scan-statistics" class="results-block" aria-labelledby="scan-statistics-heading">
+                <h3 id="scan-statistics-heading">Statistics</h3>
+                <div id="scan-statistics-content">
+                </div>
+            </div>
+
+            <div id="files-with-pii" class="results-block" aria-labelledby="files-with-pii-heading">
+                <h3 id="files-with-pii-heading">Files Containing PII</h3>
+                <ul id="files-with-pii-list">
+                </ul>
+            </div>
+
+            <div id="detected-entities" class="results-block" aria-labelledby="detected-entities-heading">
+                <h3 id="detected-entities-heading">Detected PII Entities</h3>
+                <div id="detected-entities-content">
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Error Section -->
+        <section id="error-section" class="alert alert-error" hidden role="alert" aria-live="assertive" aria-labelledby="error-section-heading">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3.5 21 19H3L12 3.5z"/>
+                <path d="M12 9.5v4.25"/>
+                <path d="M12 16.75h.01"/>
+            </svg>
+            <div>
+                <h2 id="error-section-heading">Error</h2>
+                <p id="error-message"></p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="page-footer">
+        <p>PII Discovery &mdash; scans are processed temporarily and are not stored.</p>
+    </footer>
+
+    <script src="/static/js/app.js" defer></script>
+</body>
+</html>
